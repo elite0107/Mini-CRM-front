@@ -14,7 +14,11 @@
         <MDBInput label="Email" class="mb-3"/>
         <MDBInput label="Password" class="mb-3"/>
         <div class="d-flex justify-content-around">
-          <MDBBtn color="info">Signup</MDBBtn>
+          <router-link to="/signup">
+            <MDBBtn color="info">
+              Signup
+            </MDBBtn>
+          </router-link>
           <MDBBtn color="primary">Login</MDBBtn>
         </div>
       </MDBCardBody>
