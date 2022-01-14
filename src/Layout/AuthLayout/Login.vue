@@ -8,18 +8,32 @@
           class="img"
         />
       </div>
-
       <MDBCardBody>
         <MDBCardTitle>Login</MDBCardTitle>
-        <MDBInput label="Email" class="mb-3"/>
-        <MDBInput label="Password" class="mb-3"/>
+        <MDBInput
+          label="Email"
+          class="mb-3"
+          v-model="email"
+        />
+        <MDBInput
+          label="Password"
+          type="password"
+          class="mb-3"
+          v-model="password"
+        />
         <div class="d-flex justify-content-around">
           <router-link to="/signup">
             <MDBBtn color="info">
               Signup
             </MDBBtn>
           </router-link>
-          <MDBBtn color="primary">Login</MDBBtn>
+          <MDBBtn
+            color="primary"
+            type
+            v-on:click="onLogin()"
+          >
+            Login
+          </MDBBtn>
         </div>
       </MDBCardBody>
     </MDBCard>
@@ -27,12 +41,42 @@
 </template>
 
 <script>
+  // import MDB Components
   import { MDBCard, MDBCardBody, MDBCardTitle, MDBInput, MDBBtn } from "mdb-vue-ui-kit";
+
+  // import service
+  import ApiService from '../../Services/ApiService';
+
+  // import constants
+  import Constants from "../../Config/Constants";
 
   export default {
     name: 'Login',
     components: {
       MDBCard, MDBCardBody, MDBCardTitle, MDBInput, MDBBtn
+    },
+    data() {
+      return {
+        email: "",
+        password: "",
+      }
+    },
+    methods: {
+      /**
+       * Check if the email and password are validated
+       */
+      onLogin: function() {
+        // Validate
+        
+        const payload = {
+          email: this.email,
+          password: this.password
+        }
+
+        // Check if the payload is true : API Integration
+        const result = ApiService.postRequest(Constants.API_URL + "/login", payload);
+        console.log(result);
+      }
     }
   }
 </script>
