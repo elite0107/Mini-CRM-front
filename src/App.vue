@@ -1,14 +1,13 @@
 <template>
-  <Login></Login>
+  <AuthLayout></AuthLayout>
 </template>
 
 <script>
-import Login from "./Layout/AuthLayout/Login.vue";
-
+import AuthLayout from "./Layout/AuthLayout";
 export default {
   name: 'App',
   components: {
-    Login
+    AuthLayout
   }
 }
 </script>
@@ -19,7 +18,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
   min-height: 100vh;
   background: #f1f1f1;
 }

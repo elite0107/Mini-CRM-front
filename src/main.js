@@ -1,6 +1,12 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import router from './router'
 import 'mdb-vue-ui-kit/css/mdb.min.css';
 
-createApp(App)
-  .mount('#app')
+const app = createApp(App);
+
+// Set router to app
+app.use(router);
+
+// Moust App
+app.mount("#app");
