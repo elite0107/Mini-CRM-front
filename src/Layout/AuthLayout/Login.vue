@@ -66,16 +66,18 @@
        * Check if the email and password are validated
        */
       onLogin: function() {
-        // Validate
-        
         const payload = {
           email: this.email,
           password: this.password
         }
 
         // Check if the payload is true : API Integration
-        const result = ApiService.postRequest(Constants.API_URL + "/login", payload);
-        console.log(result);
+        ApiService
+          .postRequest(Constants.API_URL + "/auth/login", payload)
+          .then(result => {
+            localStorage.setItem("access_token", result.data.access_token);
+            this.$router.push('/company');
+          });
       }
     }
   }

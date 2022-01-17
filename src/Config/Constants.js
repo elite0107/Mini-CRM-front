@@ -1,3 +1,4 @@
 export default {
-  API_URL: "http://localhost:3000/api/v1"
+  API_URL: "http://localhost:8000/api",
+  PUBLIC_URL: "http://localhost:8000/"
 }
