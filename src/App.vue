@@ -1,13 +1,15 @@
 <template>
-  <AuthLayout></AuthLayout>
+  <Layout>
+    <router-view></router-view>
+  </Layout>
 </template>
 
 <script>
-import AuthLayout from "./Layout/AuthLayout";
+import Layout from "./Layout";
 export default {
   name: 'App',
   components: {
-    AuthLayout
+    Layout
   }
 }
 </script>
@@ -20,6 +22,7 @@ export default {
   text-align: center;
   min-height: 100vh;
   background: #f1f1f1;
+  user-select: none;
 }
 
 .p-absolute {
@@ -37,4 +40,6 @@ export default {
 .mt-3 { margin-top: 1rem; }
 .ms-3 { margin-left: 1rem; }
 .me-3 { margin-right: 1rem; }
+
+.p-3 { padding: 1rem; }
 </style>
