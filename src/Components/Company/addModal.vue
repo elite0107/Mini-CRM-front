@@ -19,6 +19,7 @@
       <MDBBtn color="primary" v-on:click="addCompany()">Save</MDBBtn>
     </MDBModalFooter>
   </MDBModal>
+  <Loading :visible="loading"></Loading>
 </template>
 
 <script>
@@ -36,6 +37,7 @@
 
   // import Custom Components
   import FileUpload from '../Common/FileUpload.vue';
+  import Loading from "../Common/Loading.vue";
 
   // import Service
   import ApiService from '../../Services/ApiService';
@@ -47,14 +49,15 @@
     props: [ 'visible' ],
     components: {
       MDBModal, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter, MDBBtn, MDBInput,
-      FileUpload
+      FileUpload, Loading
     },
     data() {
       return {
         name: "",
         email: "",
         website: "",
-        logo: {}
+        logo: {},
+        loading: false
       }
     },
     setup(props) {
@@ -89,6 +92,7 @@
        * Save company details and close modal
        */
       addCompany: function() {
+        this.loading = true;
         let formdata = new FormData();
         formdata.append('name', this.name);
         formdata.append('email', this.email);
@@ -99,6 +103,7 @@
           .postAuthorizedRequest(Constants.API_URL + '/admin/company', formdata)
           .then(
             () => {
+              this.loading = false;
               this.$emit('added');
             }
           )

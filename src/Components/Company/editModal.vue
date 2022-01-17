@@ -19,6 +19,7 @@
       <MDBBtn color="primary" v-on:click="editCompany()">Save</MDBBtn>
     </MDBModalFooter>
   </MDBModal>
+  <Loading :visible="loading"></Loading>
 </template>
 
 <script>
@@ -36,6 +37,7 @@
 
   // import Custom Components
   import FileUpload from '../Common/FileUpload.vue';
+  import Loading from "../Common/Loading.vue";
 
   // import Service
   import ApiService from '../../Services/ApiService';
@@ -47,7 +49,7 @@
     props: [ 'visible', 'company' ],
     components: {
       MDBModal, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter, MDBBtn, MDBInput,
-      FileUpload
+      FileUpload, Loading
     },
     data() {
       return {
@@ -56,6 +58,7 @@
         email: "",
         logo: "",
         website: "",
+        loading: false,
       }
     },
     setup(props) {

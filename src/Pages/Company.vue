@@ -75,6 +75,7 @@
     v-on:updated="onCompanyUpdated()"
   ></EditCompanyModal>
   <!-- EditCompanyModal -->
+  <Loading :visible="loading"></Loading>
 </template>
 <script>
   // import MDB Components
@@ -86,6 +87,7 @@
   import AddCompanyModal from '../Components/Company/addModal.vue';
   import EditCompanyModal from '../Components/Company/editModal.vue';
   import Pagination from "v-pagination-3";
+  import Loading from "../Components/Common/Loading.vue";
 
   // import Service
   import ApiService from '../Services/ApiService';
@@ -97,7 +99,7 @@
     name: 'Company',
     components: {
       MDBTable, MDBBtn, MDBIcon,
-      AddCompanyModal, EditCompanyModal, Pagination
+      AddCompanyModal, EditCompanyModal, Pagination, Loading
     },
     data() {
       return {
@@ -109,6 +111,7 @@
         addModalVisible: false,
         editModalVisible: false,
         editCompanyDetail: null,
+        loading: false,
       }
     },
     mounted() {
@@ -119,6 +122,7 @@
        * Retrive Companies Array by pagination
        */
       retrieveCompanyies() {
+        this.loading = true;
         ApiService
           .getAuthorizedRequest(Constants.API_URL + '/admin/company?page=' + this.pagination.page)
           .then(
@@ -126,6 +130,7 @@
               this.pagination.records = result.data.companies.total;
               this.pagination.page = result.data.companies.current_page;
               this.companies = result.data.companies.data;
+              this.loading = false;
             }
           )
           .catch(error => console.log(error));
@@ -160,8 +165,7 @@
        * Get Logo Path that is located in Laravel Public Folder
        */
       getLogoPath(path) {
-        console.log(path);
-        return Constants.PUBLIC_URL + path;
+        return Constants.PUBLIC_URL + "/" + path.split('/')[1];
       },
       /**
        * Show Edit Company Modal
@@ -180,6 +184,7 @@
        * Delete Company By Id
        */
       onDeleteCompany(id) {
+        this.loading = true;
         ApiService
           .deleteAuhorizedRequest(Constants.API_URL + '/admin/company/' + id)
           .then(
@@ -187,6 +192,7 @@
             {
               this.pagination.page = 1;
               this.retrieveCompanyies();
+              this.loading = false;
             }
           );
       }

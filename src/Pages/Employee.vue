@@ -75,15 +75,17 @@
     v-on:updated="onEmployeeUpdated()"
   ></EditEmployeeModal>
   <!-- Edit Employee Modal -->
+  <Loading :visible="loading"></Loading>
 </template>
 
 <script>
 import { MDBBtn, MDBTable, MDBIcon } from 'mdb-vue-ui-kit';
-import Pagination from 'v-pagination-3';
 
 // import custom component
 import AddEmployeeModal from '../Components/Employee/addModal.vue';
 import EditEmployeeModal from '../Components/Employee/editModal.vue';
+import Pagination from 'v-pagination-3';
+import Loading from "../Components/Common/Loading";
 
 // import Service
 import ApiService from '../Services/ApiService';
@@ -95,7 +97,7 @@ export default {
   name: 'Employee',
   components: {
     MDBBtn, MDBTable, MDBIcon,
-    Pagination, AddEmployeeModal, EditEmployeeModal
+    Pagination, AddEmployeeModal, EditEmployeeModal, Loading
   },
   mounted() {
     this.retrieveEmployees();
@@ -110,6 +112,7 @@ export default {
       addModalVisible: false,
       editModalVisible: false,
       editEmployeeDetail: null,
+      loading: false
     }
   },
   methods: {
@@ -117,6 +120,7 @@ export default {
      * Retrieve Employees By Pagination
      */
     retrieveEmployees() {
+      this.loading = true;
       ApiService
         .getAuthorizedRequest(Constants.API_URL + '/admin/employee?page=' + this.pagination.page)
         .then(
@@ -124,6 +128,7 @@ export default {
             this.pagination.records = result.data.employees.total;
             this.pagination.page = result.data.employees.current_page;
             this.employees = result.data.employees.data;
+            this.loading = false;
           }
         )
         .catch(error => console.log(error));
@@ -165,6 +170,7 @@ export default {
      * Delete Employee by id
      */
     onDeleteEmployee(id) {
+      this.loading = true;
       ApiService
         .deleteAuhorizedRequest(Constants.API_URL + '/admin/employee/' + id)
         .then(
@@ -172,6 +178,7 @@ export default {
           {
             this.pagination.page = 1;
             this.retrieveEmployees();
+            this.loading = false;
           }
         );
     },

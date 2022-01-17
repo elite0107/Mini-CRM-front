@@ -27,6 +27,7 @@
       <MDBBtn color="primary" v-on:click="updateEmployee()">Save</MDBBtn>
     </MDBModalFooter>
   </MDBModal>
+  <Loading :visible="loading"></Loading>
 </template>
 
 <script>
@@ -43,6 +44,7 @@ import {
 
 import { ref } from 'vue';
 import MultiSelect from '@vueform/multiselect';
+import Loading from "../Common/Loading.vue";
 
 // import Service
 import ApiService from '../../Services/ApiService';
@@ -55,7 +57,7 @@ export default {
   props: ['visible', 'employee'],
   components: {
     MDBModal, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter, MDBBtn, MDBInput,
-    MultiSelect
+    MultiSelect, Loading
   },
   mounted() {
     this.retrieveAllCompanies()
@@ -75,7 +77,8 @@ export default {
       email: "",
       phone: "",
 
-      companies: []
+      companies: [],
+      loading: false
     }
   },
   watch: {
